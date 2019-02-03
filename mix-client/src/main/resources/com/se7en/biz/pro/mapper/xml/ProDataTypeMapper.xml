@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.se7en.biz.pro.mapper.ProDataTypeMapper">
+
+
+    <update id="mergeProDataType">
+        INSERT INTO pro_data_type VALUES
+        <foreach item="item" index="index" collection="list" open=" " separator=",  " close=" ">
+            (#{item.id}, #{item.name}, 1)
+        </foreach>
+        ON CONFLICT (id)
+        DO UPDATE SET
+        name = excluded.name
+    </update>
+</mapper>

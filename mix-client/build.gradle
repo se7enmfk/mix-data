@@ -1,0 +1,52 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+//group = 'com.se7en'
+//version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+    jcenter()
+    maven { url 'https://jitpack.io' }
+    maven { url "http://uat.ftecx.com:8081/" }
+
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web',
+
+            'commons-beanutils:commons-beanutils:1.9.3',
+
+            //poi
+            'org.apache.poi:poi:4.0.1',
+            //druid
+            'com.alibaba:druid-spring-boot-starter:1.1.10',
+            //mybatis & mybatis plus
+            'com.baomidou:mybatisplus-spring-boot-starter:1.0.5',
+            'com.baomidou:mybatis-plus:2.3',
+//            'org.apache.velocity:velocity-engine-core:2.0',
+//            'org.projectlombok:lombok:1.18.4',
+
+            //postgresql
+            'org.postgresql:postgresql:42.2.5',
+
+            'com.ftecx:frame:1.0.19',
+            'com.github.se7enmfk:spring-boot-starter-encrypt:1.6'
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}

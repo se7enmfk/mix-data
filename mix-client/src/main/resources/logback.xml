@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="1 seconds">
+
+    <contextName>logback</contextName>
+    <!--<property file="src/main/resources/logback.properties" />-->
+    <!--<property resource="application-ftx.yml"/>-->
+    <!--<property name="logPath" value="${logPath}"/>-->
+    <!--<springProperty scope="context" name="logLevel" source="log.level"/>-->
+    <springProperty scope="context" name="logPath" source="ftx.log_path"/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <!--<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] %msg%n </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}.%d{yyyy-MM-dd}.zip</fileNamePattern>
+            <!-- 单个日志文件最多 100MB, 60天的日志周期，最大不能超过20GB -->
+            <!--<maxFileSize>100MB</maxFileSize>-->
+            <maxHistory>60</maxHistory>
+            <totalSizeCap>20GB</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <!--<pattern>%date %level [%thread] %logger{36} [%file : %line] %msg%n </pattern>-->
+            <!--<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %logger{50} - %msg%n</pattern>-->
+            <pattern>%d{HH:mm:ss.SSS} [%-5level] [%thread] %msg%n </pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.se7en.biz" level="debug"/>
+
+    <root level="info">
+        <!--<appender-ref ref="file"/>-->
+        <appender-ref ref="console"/>
+    </root>
+
+</configuration>

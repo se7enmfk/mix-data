@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.se7en.biz.pro.mapper.ProDataMapper">
+
+
+    <update id="mergeData">
+        INSERT INTO pro_data VALUES
+        <foreach item="item" index="index" collection="list" open=" " separator=",  " close=" ">
+            (#{item.id},#{item.area_id}, #{item.data_dt}, #{item.data_value})
+        </foreach>
+        ON CONFLICT (id,area_id, data_dt)
+        DO UPDATE SET
+        data_value = excluded.data_value
+    </update>
+    <select id="retrieveProData" resultType="com.se7en.biz.pro.entity.ProData">
+        select *
+        from pro_data
+        where id=#{id} and area_id=#{area_id}
+        <if test="data_dt_start!=null and data_dt_start!=''">
+            and to_date(data_dt,'yyyy-MM-dd') >=to_date(#{data_dt_start},'yyyy-MM-dd')
+        </if>
+        <if test="data_dt_end!=null and data_dt_end!=''">
+            and to_date(#{data_dt_end},'yyyy-MM-dd') >=to_date(data_dt,'yyyy-MM-dd')
+        </if>
+
+        order by data_dt
+    </select>
+</mapper>
